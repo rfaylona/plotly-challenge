@@ -79,13 +79,22 @@ function init(){
     var data = [
       {
         domain: { x: [0, 1], y: [0, 1] },
-        marker: {size: 28, color:'850000'},
+        marker: {size: 28, color:'85000'},
         value: result.wfreq,
         title: 'Belly Button Washing Frequency<br> Scrubs per Week',
         titlefont: {family: '"Arial, Helvetica, sans-serif'},
         type: "indicator",
-        gauge: { axis: { visible: true, range: [0, 10] } },
-        mode: "number+gauge"
+        mode: "number+gauge",
+        gauge: { 
+          axis: { visible: true, range: [0, 10]},
+          bar: { color: 'mediumpurple'},
+          steps: [
+            { range: [0, 2], color: "#c94c4c" },
+            { range: [2, 4], color: "#f2ae72" },
+            { range: [4, 6], color: "#ffef96" },
+            { range: [6, 8], color: "#b1cbbb" },
+            { range: [8, 10], color: "#A0DAA9" }
+          ]},
       }
     ];
   
