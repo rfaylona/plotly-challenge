@@ -1,8 +1,9 @@
 var jsData;
 
 function init(){
+    //ref dropdown element
     var selector = d3.select("#selDataset");
-
+    //use dropdown to populate features
     d3.json("data/samples.json").then((data) =>{
       jsData = data;
         var subjectID = data.names;
@@ -12,20 +13,24 @@ function init(){
             .text(ID)
             .property('value', ID);
         });
+    // use 1st sample to build initial plots
     const firstbutton = subjectID[0];
     updateCharts(firstbutton);
     updateMetadata(firstbutton);
     });
 }
-  
+  //demo panel
   function updateCharts(sample) {    
     d3.json("data/samples.json").then((data) => {
     var samples = data.samples;
+    //filter data for obj w/ corresponding sample num
     var filterArray = samples.filter(sampleObject => sampleObject.id == sample);
     var result = filterArray[0];
     var sample_values = result.sample_values;
+    //creste OTUs to hold id lables and values
     var otu_ids = result.otu_ids;
-    var otu_labels = result.otu_labels;   
+    var otu_labels = result.otu_labels; 
+    //create plots for bubble chart
     var trace1 = {
         x: otu_ids,
         y: sample_values,
@@ -47,6 +52,7 @@ function init(){
         margin: {t:30}
     };
     Plotly.newPlot('bubble', data, layout); 
+    //create bar chart for top ten
     var trace1 = {
         x: sample_values.slice(0,10).reverse(),
         y: otu_ids.slice(0,10).map(otuID => `OTU ${otuID}`).reverse(),
@@ -64,7 +70,7 @@ function init(){
     Plotly.newPlot("bar", data, layout);  
     });
   }
-  
+  //clear metadata when new ID is selected
   function updateMetadata(sample) {
     d3.json("data/samples.json").then((data) => {
         var metadata = data.metadata;
@@ -75,7 +81,7 @@ function init(){
         Object.entries(result).forEach(([key, value]) => {
             metaPanel.append("h6").text(`${key.toUpperCase()}: ${value}`)
         })
-    
+    //create guage chart
     var data = [
       {
         domain: { x: [0, 1], y: [0, 1] },
