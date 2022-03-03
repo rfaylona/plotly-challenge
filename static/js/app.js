@@ -42,6 +42,7 @@ function init(){
         colorscale:"Portland"
         }
     };
+    //trace data for the pop
     var data = [trace1];
     var layout = {
         title: 'Bacteria Cultures per Sample',
